@@ -17,11 +17,24 @@
     obj.style.zIndex="10000"; 
     alert("obj.style.background='blue'") 
   }
+
+  function test3() {
+    var obj = document.getElementById("test"); 
+    obj.style.background="green";
+    var obj1 = document.createElement("div");
+    obj1.style.width="100%";
+    obj1.style.height="100%";
+    obj1.innerHTML = "obj.style.background='green'";
+    obj1.onclick=function() {
+      obj1.outerHTML = "";
+    }
+  }
   </script>
 </head>
 <body>
-	<div id="test" style="width: 100%; height: 200px; background: #CCC;"></div>
-	<a href="javascript:test1()">yellow - test1</a>
-	<a href="javascript:test2()">blue - test2</a>
+  <div id="test" style="width: 100%; height: 200px; background: #CCC;"></div>
+  <a href="javascript:test1()">yellow - window.alert</a>
+  <a href="javascript:test2()">blue - window.alert+trick</a>
+  <a href="javascript:test3()">green - divAlert</a>
 </body>
 </html>
