@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>test</title>
+		<script>
+		
+			function syncCall(t, cnt) {
+				alert("syncCall(" + t + ", " + cnt + ")");
+				var divObj = document.getElementById("result");
+				cnt = cnt || 1;
+				for(var i = 0 ; i < cnt ; i++) {
+					xhrCall(t, false);
+				}
+			}
+			
+			function asyncCall(t, cnt) {
+				var divObj = document.getElementById("result");
+				cnt = cnt || 1;
+				for(var i = 0 ; i < cnt ; i++) {
+					xhrCall(t, true);
+				}
+			}
+			
+			function xhrCall(t, async) {
+				var type = async ? "async" : "sync";
+				var divObj = document.getElementById("result");
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/wait.jsp?time=" + t, async);
+				xhr.onload = function (e) {
+					if (xhr.readyState === 4) {
+						if (xhr.status === 200) {
+							console.log(xhr.responseText);
+							divObj.innerHTML = (new Date()).toLocaleString() + "  " + type + "  " + xhr.responseText + "<br>" + divObj.innerHTML;
+						} else {
+							console.error(xhr.statusText);
+							divObj.innerHTML = xhr.statusText + "<br>" + divObj.innerHTML;
+						}
+					}
+				};
+				xhr.onerror = function (e) {
+					console.error(xhr.statusText);
+					divObj.innerHTML = xhr.statusText + "<br>" + divObj.innerHTML;
+				};
+				xhr.send(null);
+			}
+		</script>
+    </head>
+    <body>
+			<input type="button" onclick="syncCall(1)"     value="sync 1"/>
+			<input type="button" onclick="syncCall(10)"    value="sync 10"/>
+			<input type="button" onclick="syncCall(20)"    value="sync 20"/>
+			<input type="button" onclick="syncCall(25)"    value="sync 25"/>
+			<input type="button" onclick="syncCall(30)"    value="sync 30"/>
+			<input type="button" onclick="syncCall(31)"    value="sync 31"/>
+			<input type="button" onclick="syncCall(32)"    value="sync 32"/>
+			<input type="button" onclick="syncCall(33)"    value="sync 33"/>
+			<input type="button" onclick="syncCall(34)"    value="sync 34"/>
+			<input type="button" onclick="syncCall(35)"    value="sync 35"/>
+			<input type="button" onclick="syncCall(40)"    value="sync 40"/>
+			<input type="button" onclick="syncCall(50)"    value="sync 50"/>
+			<input type="button" onclick="syncCall(11, 3)" value="sync 11*3"/>
+			<input type="button" onclick="syncCall(20, 5)" value="sync 20*5"/>
+			<input type="button" onclick="syncCall(30, 5)" value="sync 30*5"/>
+			<input type="button" onclick="syncCall(50, 5)" value="sync 50*5"/>
+			<br/>
+			<input type="button" onclick="asyncCall(1)"     value="async 1"/>
+			<input type="button" onclick="asyncCall(10)"    value="async 10"/>
+			<input type="button" onclick="asyncCall(20)"    value="async 20"/>
+			<input type="button" onclick="asyncCall(25)"    value="async 25"/>
+			<input type="button" onclick="asyncCall(30)"    value="async 30"/>
+			<input type="button" onclick="asyncCall(31)"    value="async 31"/>
+			<input type="button" onclick="asyncCall(32)"    value="async 32"/>
+			<input type="button" onclick="asyncCall(33)"    value="async 33"/>
+			<input type="button" onclick="asyncCall(34)"    value="async 34"/>
+			<input type="button" onclick="asyncCall(35)"    value="async 35"/>
+			<input type="button" onclick="asyncCall(40)"    value="async 40"/>
+			<input type="button" onclick="asyncCall(50)"    value="async 50"/>
+			<input type="button" onclick="asyncCall(11, 3)" value="async 11*3"/>
+			<input type="button" onclick="asyncCall(20, 5)" value="async 20*5"/>
+			<input type="button" onclick="asyncCall(30, 5)" value="async 30*5"/>
+			<input type="button" onclick="asyncCall(50, 5)" value="async 50*5"/>                                    
+
+			<br/>                         
+			<div id="result" style="position:relative;height:200px;background:gray;"></div>
+			</body>                         
+</html>                             
