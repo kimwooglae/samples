@@ -24,7 +24,7 @@ Create the root key
 openssl genrsa -aes256 -out private/inswaveCA.key 2048
 ~~~~
 
-> Enter pass phrase for inswaveCA.key: inswave1234
+> Enter pass phrase for inswaveCA.key: password1234
 
 Create the root certificate
 ---------------------------
@@ -48,7 +48,7 @@ Create a key
 ~~~~~
 openssl genrsa -aes256 -out newcerts/localhost.key 2048
 ~~~~~
-> Enter pass phrase for newcerts/localhost.key: admin123
+> Enter pass phrase for newcerts/localhost.key: password1234
 
 Private Key 에서 Pass Phrase 제거
 -------------------------------
