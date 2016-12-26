@@ -272,3 +272,5 @@ openssl crl -in crl/crl.pem -noout -text
 참고
 ===
 * https://jamielinux.com/docs/openssl-certificate-authority/index.html
+* http://stackoverflow.com/questions/11966123/howto-create-a-certificate-using-openssl-including-a-crl-distribution-point
+* 테스트 환경 : OpenSSL 0.9.8zh 14 Jan 2016 (Mac OS X)
