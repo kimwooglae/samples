@@ -17,8 +17,8 @@ myca.cnf 파일 생성
 default_ca              = CA_default
 
 [ CA_default ]
-
-dir                     = /Users/wlkim/inswaveca/20161226_02
+#dir 경로 수정 필요
+dir                     = /Users/wlkim/inswaveca/20161226_04
 certs                   = $dir/certs
 crl_dir                 = $dir/crl
 new_certs_dir           = $dir/newcerts
@@ -49,11 +49,8 @@ policy                  = policy_any
 
 [ policy_any ]
 countryName             = supplied
-stateOrProvinceName     = optional
 organizationName        = optional
-organizationalUnitName  = optional
 commonName              = supplied
-emailAddress            = optional
 
 [ req ]
 # Options for the `req` tool (`man req`).
@@ -68,47 +65,22 @@ default_md          = sha256
 x509_extensions     = v3_ca
 
 [ req_distinguished_name ]
-countryName                     = KR
-stateOrProvinceName             = Seoul
-localityName                    = Seoul
-0.organizationName              = Inswave Systems CO., LTD.
-organizationalUnitName          = R&D Division
-commonName                      = Inswave CA
-emailAddress                    = webmaster@inswave.com
+countryName                     = Country Name (2 letter code)
+0.organizationName              = Organization Name
+commonName                      = Common Name
 
 # Optionally, specify some defaults.
 countryName_default             = KR
-stateOrProvinceName_default     = Seoul
-localityName_default            = Seoul
-0.organizationName_default      = Inswave Systems CO., LTD.
-organizationalUnitName_default  = R&D Division
+0.organizationName_default      = Inswave Systems
 commonName_default              = Inswave CA
-emailAddress_default            = webmaster@inswave.com
 
 [ v3_ca ]
 # Extensions for a typical CA (`man x509v3_config`).
 subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid:always,issuer
-basicConstraints = critical, CA:true
-keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+authorityKeyIdentifier = keyid:always,issuer:always
+basicConstraints = CA:true
 crlDistributionPoints=URI:http://127.0.0.1:3103/crl/crl.pem
-
-
-[ server_cert ]
-# Extensions for server certificates (`man x509v3_config`).
-basicConstraints = CA:FALSE
-nsCertType = server
-nsComment = "OpenSSL Generated Server Certificate"
-subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid,issuer:always
-keyUsage = critical, digitalSignature, keyEncipherment
-extendedKeyUsage = serverAuth
-
-[ crl_ext ]
-authorityKeyIdentifier=keyid:always
 ~~~~
-
-
 
 Create the root key
 -------------------
@@ -139,48 +111,6 @@ configuration file 파일 생성
 ---------------------
 myserver.cnf
 ~~~~
-[ ca ]
-default_ca              = CA_default
-
-[ CA_default ]
-
-dir                     = /Users/wlkim/inswaveca/20161226_02
-certs                   = $dir/certs
-crl_dir                 = $dir/crl
-new_certs_dir           = $dir/newcerts
-database                = $dir/index.txt
-serial                  = $dir/serial
-RANDFILE                = $dir/private/.rand
-
-private_key             = $dir/private/inswaveCA.key
-certificate             = $dir/certs/inswaveCA.crt
-
-crlnumber               = $dir/crlnumber
-crl                     = $dir/crl/ca.crl.pem
-crl_extensions          = crl_ext
-default_crl_days        = 30
-
-default_md              = sha256
-
-name_opt                = ca_default
-cert_opt                = ca_default
-default_days            = 7295
-
-presere                 = no
-policy                  = policy_any
-
-#email_in_dn             = no
-#copy_extensions         = none
-#x509_extensions         = extensions_section
-
-[ policy_any ]
-countryName             = supplied
-stateOrProvinceName     = optional
-organizationName        = optional
-organizationalUnitName  = optional
-commonName              = supplied
-emailAddress            = optional
-
 [ req ]
 # Options for the `req` tool (`man req`).
 default_bits        = 2048
@@ -194,37 +124,28 @@ default_md          = sha256
 x509_extensions     = v3_ca
 
 [ req_distinguished_name ]
-countryName                     = KR
-stateOrProvinceName             = Seoul
-localityName                    = Seoul
-0.organizationName              = Inswave Systems CO., LTD.
-organizationalUnitName          = R&D Division
-commonName                      = 127.0.0.1
-emailAddress                    = webmaster@inswave.com
+countryName                     = Country Name (2 letter code)
+0.organizationName              = Organization Name
+organizationalUnitName          = Organizational Unit Name
+commonName                      = Common Name
 
 # Optionally, specify some defaults.
 countryName_default             = KR
-stateOrProvinceName_default     = Seoul
-localityName_default            = Seoul
-0.organizationName_default      = Inswave Systems CO., LTD.
-organizationalUnitName_default  = R&D Division
+0.organizationName_default      = Inswave Systems
+organizationalUnitName_default  = W-Gear
 commonName_default              = 127.0.0.1
-emailAddress_default            = webmaster@inswave.com
 
 [ v3_ca ]
 # Extensions for a typical CA (`man x509v3_config`).
 subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid:always,issuer
-basicConstraints = critical, CA:true
-keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+authorityKeyIdentifier = keyid:always,issuer:always
+basicConstraints = CA:true
 crlDistributionPoints=URI:http://127.0.0.1:3103/crl/crl.pem
 subjectAltName=IP:127.0.0.1
 ~~~~
 
-
 Create a key
 ------------
-
 ~~~~~
 openssl genrsa -aes256 -out newcerts/localhost.key 2048
 ~~~~~
