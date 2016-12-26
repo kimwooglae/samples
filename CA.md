@@ -268,3 +268,7 @@ Verify the CRL
 ~~~~
 openssl crl -in crl/crl.pem -noout -text
 ~~~~
+
+참고
+===
+* https://jamielinux.com/docs/openssl-certificate-authority/index.html
