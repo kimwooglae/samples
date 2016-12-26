@@ -1,10 +1,11 @@
 폴더 초기화
 =========
-
+~~~~
 mkdir certs crl newcerts private
 touch index.txt
 echo 1000 > serial
 echo 01 > crlnumber
+~~~~
 
 ROOT CA 인증서
 =============
