@@ -52,19 +52,11 @@ function serialize(node) {
         return node.data.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
       case 4:
         return "<![CDATA[" + node.data.replace(/]]>/g, "]]]]><![CDATA[>") + "]]>";
-      case 7:
-        return "<?" + node.target + " " + node.data + "?>";
-      case 8:
-        return "<!--" + node.data + "-->";
       case 9:
-        var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        var xml = "";
         for (var child = node.firstChild; child != null; child = child.nextSibling) {
           xml += serialize(child) + "\n";
         }
-        return xml;
-      case 10:
-        var xml = "<!DOCTYPE " + node.name + " PUBLIC \"" + node.publicId + "\" \"" + node.systemId + "\" [\n";
-        xml += "]>";
         return xml;
       case 11:
         var xml = "";
@@ -83,8 +75,7 @@ window.onload = doInit;
 <body>
 <h3 id="ua"></h3>
 <h4> XML </h4>
-<textarea id="src" style="border:1px solid #777;width:95%;height:100px"><?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<textarea id="src" style="border:1px solid #777;width:95%;height:100px"><html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <script type="javascript"><![CDATA[]]></script>
     </head>
