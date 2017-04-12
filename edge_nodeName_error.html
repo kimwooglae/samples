@@ -8,14 +8,15 @@ function doInit() {
   document.getElementById("ua").innerHTML = navigator.userAgent;
 }
 
+var dom = null;
 function parse() {
   var str = document.getElementById("src").value;
   var parser = new DOMParser();
-  var dom = parser.parseFromString(str, "text/xml");
+  dom = parser.parseFromString(str, "text/xml");
 }
 function test() {
-  document.getElementById("tagname").innerHTML = dom.documentElement.firstChild.tagName;
   document.getElementById("nodename").innerHTML = dom.documentElement.firstChild.nodeName;
+  document.getElementById("tagname").innerHTML = dom.documentElement.firstChild.tagName;
 }
 
 window.onload = doInit;
