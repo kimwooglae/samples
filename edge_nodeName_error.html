@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XML Error</title>
+<title>XML Serialize Error</title>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <script>
 function doInit() {
   document.getElementById("ua").innerHTML = navigator.userAgent;
 }
 
-var dom = null;
-function parse() {
+var dom;
+function test() {
   var str = document.getElementById("src").value;
   var parser = new DOMParser();
-  dom = parser.parseFromString(str, "text/xml");
-}
-function test() {
+  dom = parser.parseFromString(str, "application/xml");
+  var stringMaker = new XMLSerializer();
+  document.getElementById("dest").value = stringMaker.serializeToString(dom);
   document.getElementById("nodename").innerHTML = dom.documentElement.firstChild.nodeName;
   document.getElementById("tagname").innerHTML = dom.documentElement.firstChild.tagName;
+
 }
 
 window.onload = doInit;
@@ -25,16 +27,16 @@ window.onload = doInit;
 <body>
 <h3 id="ua"></h3>
 <h4> XML </h4>
-<textarea id="src" style="border:1px solid #777;width:95%;height:100px"><html xmlns="http://www.w3.org/1999/xhtml"><body></body></html></textarea>
+<textarea id="src" style="border:1px solid #777;width:95%;height:50px"><html xmlns="http://www.w3.org/1999/xhtml"><body></body></html></textarea>
 <br>
-<input type="button" value="parse" onclick="parse()">
 <input type="button" value="test" onclick="test()">
+<br>
 
+<h4> (new XMLSerializer()).serializeToString() </h4>
+<textarea id="dest" style="border:1px solid #777;width:95%;height:50px"></textarea>
 <h4> node.nodeName </h4>
 <div id="nodename"></div>
-
 <h4> node.tagName </h4>
 <div id="tagname"></div>
-
 </body>
 </html>
