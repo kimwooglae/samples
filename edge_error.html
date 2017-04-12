@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XML Error</title>
+<title>XML Serialize Error</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <script>
 function doInit() {
   document.getElementById("ua").innerHTML = navigator.userAgent;
-  run();
 }
 
 var dom;
-function run() {
+function parse() {
   var str = document.getElementById("src").value;
   var parser = new DOMParser();
   dom = parser.parseFromString(str, "text/xml");
+}
+
+function serialize() {
   var stringMaker = new XMLSerializer();
-debugger;  document.getElementById("dest").value = stringMaker.serializeToString(dom);
+  document.getElementById("dest").value = stringMaker.serializeToString(dom);
   document.getElementById("tagname").value = serializeTagName(dom);
   document.getElementById("nodename").value = serializeNodeName(dom);
 
@@ -136,7 +138,8 @@ window.onload = doInit;
 </html>
 </textarea>
 <br>
-<input type="button" value="RUN" onclick="run()">
+<input type="button" value="parse" onclick="parse()">
+<input type="button" value="serialize" onclick="serialize()">
 <br>
 
 <h4> (new XMLSerializer()).serializeToString() </h4>
