@@ -6,15 +6,16 @@
 <script>
 function doInit() {
   document.getElementById("ua").innerHTML = navigator.userAgent;
-  test();
 }
 
-function test() {
+function parse() {
   var str = document.getElementById("src").value;
   var parser = new DOMParser();
   var dom = parser.parseFromString(str, "text/xml");
-  document.getElementById("tagname").innerHTML = dom.documentElement.firstChild.nodeName;
-  document.getElementById("nodename").innerHTML = dom.documentElement.firstChild.tagName;
+}
+function test() {
+  document.getElementById("tagname").innerHTML = dom.documentElement.firstChild.tagName;
+  document.getElementById("nodename").innerHTML = dom.documentElement.firstChild.nodeName;
 }
 
 window.onload = doInit;
@@ -25,6 +26,7 @@ window.onload = doInit;
 <h4> XML </h4>
 <textarea id="src" style="border:1px solid #777;width:95%;height:100px"><html xmlns="http://www.w3.org/1999/xhtml"><body></body></html></textarea>
 <br>
+<input type="button" value="parse" onclick="parse()">
 <input type="button" value="test" onclick="test()">
 
 <h4> node.nodeName </h4>
