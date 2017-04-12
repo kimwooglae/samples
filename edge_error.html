@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>XML Error</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<script>
+function doInit() {
+  document.getElementById("ua").innerHTML = navigator.userAgent;
+  serialize();
+}
+
+function serialize() {
+  var str = document.getElementById("src").value;
+  var parser = new DOMParser();
+  var dom = parser.parseFromString( str , "text/xml" );
+  var stringMaker = new XMLSerializer();
+  document.getElementById("dest").value = stringMaker.serializeToString(dom);
+}
+
+
+window.onload = doInit;
+</script>
+</head>
+<body>
+<h3 id="ua"></h3>
+<h4> XML </h4>
+<textarea id="src" style="border:1px solid #777;width:95%;height:150px"><?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+        </xf:model>
+        <script type="javascript"><![CDATA[ 
+        ]]></script>
+    </head>
+    <body>
+    </body>
+</html>
+</textarea>
+
+<h4> Serialized XML </h4>
+<textarea id="dest" style="border:1px solid #777;width:95%;height:150px"></textarea>
+</body>
+</html>
