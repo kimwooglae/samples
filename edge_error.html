@@ -10,10 +10,11 @@ function doInit() {
   run();
 }
 
+var dom;
 function run() {
   var str = document.getElementById("src").value;
   var parser = new DOMParser();
-  var dom = parser.parseFromString(str, "text/xml");
+  dom = parser.parseFromString(str, "text/xml");
   var stringMaker = new XMLSerializer();
   document.getElementById("dest").value = stringMaker.serializeToString(dom);
   document.getElementById("tagname").value = serializeTagName(dom);
@@ -131,7 +132,7 @@ window.onload = doInit;
     <head>
         <script type="javascript"><![CDATA[]]></script>
     </head>
-    <body></body>
+    <body><script type="javascript"><![CDATA[]]></script></body>
 </html>
 </textarea>
 <br>
