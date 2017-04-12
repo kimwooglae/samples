@@ -16,11 +16,63 @@ function run() {
   var dom = parser.parseFromString(str, "text/xml");
   var stringMaker = new XMLSerializer();
   document.getElementById("dest").value = stringMaker.serializeToString(dom);
-  document.getElementById("node").value = serialize(dom);
+  document.getElementById("tagname").value = serializeTagName(dom);
+  document.getElementById("nodename").value = serializeNodeName(dom);
 
 }
 
-function serialize(node) {
+
+function serializeNodeName(node) {
+  try {
+    switch (node.nodeType) {
+      case 1:
+        var xml = "<" + node.nodeName;
+        for (var i = 0; i < node.attributes.length; ++i) {
+          var attribute = node.attributes[i];
+          if (attribute == null) {
+            continue;
+          }
+          if (attribute.specified) {
+            xml += serializeNodeName(attribute);
+          }
+        }
+        if (node.hasChildNodes()) {
+          xml += ">";
+          for (var child = node.firstChild; child != null; child = child.nextSibling) {
+            xml += serializeNodeName(child);
+          }
+          xml += "</" + node.nodeName + ">";
+        } else {
+          xml += "></" + node.nodeName + ">";
+        }
+        return xml;
+      case 2:
+        var name = node.name;
+        var value = node.value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return " " + name + "=\"" + value + "\"";
+      case 3:
+        return node.data.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      case 4:
+        return "<![CDATA[" + node.data.replace(/]]>/g, "]]]]><![CDATA[>") + "]]>";
+      case 9:
+        var xml = "";
+        for (var child = node.firstChild; child != null; child = child.nextSibling) {
+          xml += serializeNodeName(child) + "\n";
+        }
+        return xml;
+      case 11:
+        var xml = "";
+        for (var child = node.firstChild; child != null; child = child.nextSibling) {
+          xml += serializeNodeName(child);
+        }
+        return xml;
+    }
+  } catch (e) {
+    alert(e);
+  }
+};
+
+function serializeTagName(node) {
   try {
     switch (node.nodeType) {
       case 1:
@@ -31,13 +83,13 @@ function serialize(node) {
             continue;
           }
           if (attribute.specified) {
-            xml += serialize(attribute);
+            xml += serializeTagName(attribute);
           }
         }
         if (node.hasChildNodes()) {
           xml += ">";
           for (var child = node.firstChild; child != null; child = child.nextSibling) {
-            xml += serialize(child);
+            xml += serializeTagName(child);
           }
           xml += "</" + node.tagName + ">";
         } else {
@@ -55,13 +107,13 @@ function serialize(node) {
       case 9:
         var xml = "";
         for (var child = node.firstChild; child != null; child = child.nextSibling) {
-          xml += serialize(child) + "\n";
+          xml += serializeTagName(child) + "\n";
         }
         return xml;
       case 11:
         var xml = "";
         for (var child = node.firstChild; child != null; child = child.nextSibling) {
-          xml += serialize(child);
+          xml += serializeTagName(child);
         }
         return xml;
     }
@@ -88,8 +140,10 @@ window.onload = doInit;
 
 <h4> (new XMLSerializer()).serializeToString() </h4>
 <textarea id="dest" style="border:1px solid #777;width:95%;height:100px"></textarea>
-<h4> custom serializer - DOM Traverse </h4>
-<textarea id="node" style="border:1px solid #777;width:95%;height:100px"></textarea>
+<h4> custom serializer - node.nodeName </h4>
+<textarea id="nodename" style="border:1px solid #777;width:95%;height:100px"></textarea>
+<h4> custom serializer - node.tagName </h4>
+<textarea id="tagname" style="border:1px solid #777;width:95%;height:100px"></textarea>
 
 </body>
 </html>
