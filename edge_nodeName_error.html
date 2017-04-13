@@ -21,6 +21,21 @@ function test() {
 
 }
 
+
+function test1() {
+  var str = document.getElementById("src").value;
+  var parser = new DOMParser();
+  dom = parser.parseFromString(str, "application/xml");
+
+document.getElementById("nodename").innerHTML = dom.documentElement.firstChild.nodeName;
+  document.getElementById("tagname").innerHTML = dom.documentElement.firstChild.tagName;
+
+  var stringMaker = new XMLSerializer();
+  document.getElementById("dest").value = stringMaker.serializeToString(dom);
+  
+
+}
+
 window.onload = doInit;
 </script>
 </head>
@@ -30,6 +45,9 @@ window.onload = doInit;
 <textarea id="src" style="border:1px solid #777;width:95%;height:50px"><html xmlns="http://www.w3.org/1999/xhtml"><body></body></html></textarea>
 <br>
 <input type="button" value="test" onclick="test()">
+
+
+<input type="button" value="test1" onclick="test1()">
 <br>
 
 <h4> (new XMLSerializer()).serializeToString() </h4>
